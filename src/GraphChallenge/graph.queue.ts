@@ -1,7 +1,7 @@
 import { isEmpty } from 'lodash';
 
 export class PriorityQueue {
-  collection: any[];
+  collection: [string, number][];
   constructor() {
     this.collection = [];
   }
@@ -23,5 +23,11 @@ export class PriorityQueue {
         this.collection.push(element);
       }
     }
+  }
+
+  // Remove the first element from the queue and return it.
+  dequeue() {
+    let value = this.collection.shift();
+    return value;
   }
 }
