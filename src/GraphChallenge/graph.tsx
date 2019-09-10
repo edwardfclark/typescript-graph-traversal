@@ -4,6 +4,7 @@ import { Graph } from './graph.graph';
 
 const GraphChallenge = () => {
   const data = new Graph(graphData);
+  data.dijkstra("A", "C");
   return <pre>{JSON.stringify(data)}</pre>;
 }
 

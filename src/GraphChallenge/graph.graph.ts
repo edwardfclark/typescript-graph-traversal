@@ -1,11 +1,13 @@
 import { PriorityQueue } from "./graph.queue";
-import { isEmpty } from 'lodash'
+import { isEmpty, get } from 'lodash'
 
 // INTERFACES
 import { 
   INode, 
   IAdjacencyList,
-  IGraphData
+  IGraphData,
+  IObjectOfNumbers,
+  IObjectOfStrings
 } from './graph.interfaces'
 
 
@@ -39,24 +41,53 @@ export class Graph {
         this.addEdge(key, edge, edges[edge])
       }
     }
-    console.log(this.adjacencyList)
+  }
+  // Implement Dijkstra's Algorithm
+  dijkstra(start: string, end: string) {
+    const times: IObjectOfNumbers = {}
+    const backtrace: IObjectOfStrings = {};
+    let priorityQueue = new PriorityQueue();
+
+    // The time to get to start from the start is 0.
+    times[start] = 0;
+
+    // For every other node, initialize to Infinity.
+    this.nodes.forEach(node => {
+      if (node.name !== start) {
+        times[node.name] = Infinity;
+      }
+    });
+
+    // Add start to the PriorityQueue to kick things off...
+    priorityQueue.enqueue([start, 0]);
+
+    // Keep looping while there are elements in the queue.
+    while (!isEmpty(priorityQueue.collection)) {
+      let shortestStep = priorityQueue.dequeue();
+      let currentNode = get(shortestStep, '[0]', null);
+
+      this.adjacencyList[currentNode].forEach(neighbor => {
+        let time = times[currentNode] + neighbor.weight;
+        if (time < times[neighbor.nodeName]) {
+          times[neighbor.nodeName] = time;
+          backtrace[neighbor.nodeName] = currentNode;
+          priorityQueue.enqueue([neighbor.nodeName, time])
+        }
+      });
+    }
+
+    let path = [end];
+    let lastStep = end;
+
+    while (lastStep !== start) {
+      path.unshift(backtrace[lastStep]);
+      lastStep = backtrace[lastStep];
+    }
+
+    console.log(path, times[end])
   }
   // Find the path using Dijkstra's Algorithm.
   // dijkstra(startNode: INode, endNode: INode) {
-  //   // Initial values
-  //   let times: ITimes = {};
-  //   let backtrace: IBacktrace = {};
-  //   let pq = new PriorityQueue();
-    
-  //   // The time to get to startNode from startNode is 0.
-  //   times[startNode.node] = 0;
-
-  //   // Initially, set all nodes but startNode to cost Infinity time to reach.
-  //   this.nodes.forEach(node => {
-  //     if (node !== startNode) {
-  //       times[node.node] = Infinity;
-  //     }
-  //   });
 
   //   // Add startNode to the PriorityQueue, then keep looping while it has elements in.
   //   pq.enqueue([startNode, 0]);

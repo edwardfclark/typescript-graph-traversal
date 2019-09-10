@@ -7,7 +7,7 @@ export class PriorityQueue {
   }
 
   // If the collection is empty, just push element on. If not, place it in weight order.
-  enqueue(element: any) {
+  enqueue(element: [string, number]) {
     if (isEmpty(this.collection)) {
       this.collection.push(element);
     } else {
@@ -30,4 +30,5 @@ export class PriorityQueue {
     let value = this.collection.shift();
     return value;
   }
+  
 }
