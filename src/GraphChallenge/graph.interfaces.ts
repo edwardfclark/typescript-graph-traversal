@@ -3,11 +3,6 @@ export interface INode {
   adjacencyList: string[];
 }
 
-export interface IEdge {
-  node: string;
-  weight: number;
-}
-
 export interface IObjectOfNumbers {
   [key: string]: number;
 }
@@ -17,7 +12,7 @@ export interface IObjectOfStrings {
 }
 
 export interface IAdjacencyListItem {
-  node: INode;
+  nodeName: string;
   weight: number;
 }
 

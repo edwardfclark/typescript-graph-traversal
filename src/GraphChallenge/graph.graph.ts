@@ -17,23 +17,30 @@ export class Graph {
     console.log(data)
     this.nodes = [];
     this.adjacencyList = {};
+    this.initialSetup(data);
+
   }
 
   // Add a new node to the nodes array.
-  addNode(node: INode): void {
+  private addNode(node: INode): void {
     this.nodes.push(node);
     this.adjacencyList[node.name] = [];
   }
   // Add edges to each node.
-  addEdge(node1: any, node2: any, weight: number): void {
-    this.adjacencyList[node1].push({node: node2, weight});
-    this.adjacencyList[node2].push({node: node1, weight});
+  private addEdge(node1: string, node2: string, weight: number): void {
+    this.adjacencyList[node1].push({nodeName: node2, weight});
   }
   // Run initial setup for the graph.
-  assembleNodes(data: IGraphData) {
-    
+  private initialSetup(obj: IGraphData) {
+    for (let key in obj) {
+      this.addNode({name: key, adjacencyList: []});
+      let edges = obj[key];
+      for (let edge in edges) {
+        this.addEdge(key, edge, edges[edge])
+      }
+    }
+    console.log(this.adjacencyList)
   }
-  
   // Find the path using Dijkstra's Algorithm.
   // dijkstra(startNode: INode, endNode: INode) {
   //   // Initial values
