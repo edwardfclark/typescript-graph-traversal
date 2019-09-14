@@ -1,25 +1,17 @@
 import { IObjectOfNumbers } from "../GraphChallenge/graph.interfaces";
 
-export interface IWeightedLinks {
-  [key: string]: number;
-}
-
-export interface ICollection {
-  collection: [string, number][];
-}
-
-export interface IPriorityQueue extends ICollection {
-  enqueue: (element: [string, number]) => void;
-  dequeue: () => [string, number];
-}
-
-export interface IGraphProps extends IPriorityQueue {
+export interface IGraphProps {
   data?: IData;
 }
 
+// adjacencyList should be IAdjacencyList.
+// If I do this, though, TS fails to see the index signature that I have defined.
+// I don't know why...!
+// I am running out of time to solve this challenge, so I'm leaving this for now.
+// If I have time before I have to submit, I'll try and fix this.
 export interface IGraphState {
   nodes: INode[];
-  adjacencyList: IAdjacencyList;
+  adjacencyList: any;
 }
 
 export interface IObjectOfNumbers {
@@ -35,7 +27,7 @@ export interface IAdjacencyList {
   [key: string]: IAdjacencyListItem[];
 }
 export interface IData {
-  [key: string]: IWeightedLinks;
+  [key: string]: IObjectOfNumbers;
 }
 
 export interface INode {
