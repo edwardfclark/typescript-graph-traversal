@@ -1,45 +1,37 @@
 import React from "react";
 
 // INTERFACES
-import { IGraphProps } from "./graph.interfaces";
+import { IGraphProps, IGraphState, IData, INode } from "./graph.interfaces";
 
 // HELPERS
 import withPriorityQueue from "./graph.queue";
+import { reducer } from "./graph.reducer";
 
 // TODO: Remove any type from props declaration.
 // Could not for the life of mee get TS to work with my HOC without it.
-class Graph extends React.Component<any, {}> {
-  constructor(props: any) {
-    super(props);
-  }
+const Graph = (props: any) => {
+  const [state, dispatch] = React.useReducer(reducer, {
+    nodes: [],
+    adjacencyList: {}
+  });
 
-  componentDidMount() {
-    const { enqueue } = this.props;
-    enqueue(["First", 1]);
-  }
-
-  render() {
-    const { enqueue, dequeue } = this.props;
-    console.log(this.props);
-    return (
-      <React.Fragment>
-        <button
-          onClick={() => {
-            enqueue(["Second", 2]);
-          }}
-        >
-          Click Me
-        </button>
-        <button
-          onClick={() => {
-            console.log(dequeue(["Second", 2]));
-          }}
-        >
-          Then Click Me
-        </button>
-      </React.Fragment>
-    );
-  }
-}
+  React.useEffect(() => {
+    const { data } = props;
+    for (let key in data) {
+      dispatch({ type: "ADD_NODE", node: { name: key, adjacencyList: [] } });
+      let edges = data[key];
+      for (let edge in edges) {
+        dispatch({
+          type: "ADD_EDGE",
+          node1: key,
+          node2: edge,
+          weight: edges[edge]
+        });
+      }
+    }
+  }, []);
+  console.log(state);
+  return <p>Woo</p>;
+};
 
 export default withPriorityQueue(Graph);
