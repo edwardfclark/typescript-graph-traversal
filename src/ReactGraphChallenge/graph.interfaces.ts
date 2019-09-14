@@ -4,11 +4,8 @@ export interface IGraphProps {
   data?: IData;
 }
 
-// adjacencyList should be IAdjacencyList.
-// If I do this, though, TS fails to see the index signature that I have defined.
-// I don't know why...!
-// I am running out of time to solve this challenge, so I'm leaving this for now.
-// If I have time before I have to submit, I'll try and fix this.
+// TODO: Remove any.
+// If I do this, the djikstra() func breaks.
 export interface IGraphState {
   nodes: INode[];
   adjacencyList: any;

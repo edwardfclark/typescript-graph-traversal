@@ -86,7 +86,11 @@ const Graph = (props: IGraphProps) => {
     console.log(djikstra("A", "C"));
   }
 
-  return <React.Fragment>Aaaargh</React.Fragment>;
+  return (
+    <React.Fragment>
+      {!isEmpty(adjacencyList) && <pre>{djikstra("A", "C")}</pre>}
+    </React.Fragment>
+  );
 };
 
 export default Graph;
