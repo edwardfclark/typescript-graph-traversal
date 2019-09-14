@@ -2,16 +2,18 @@ import React from "react";
 import { isEmpty } from "lodash";
 
 // INTERFACES
-import { IPriorityQueue } from "./graph.interfaces";
+import { IPriorityQueue, ICollection } from "./graph.interfaces";
 
 // This HOC gives the component you wrap access to a Priority Queue data structure.
 // This allows the Priority Queue to be used for my Djikstra's Algoritm implementation and potentially re-used elsewhere in the app.
-function withPriorityQueue<T>(Component: React.ComponentType<T>) {
-  return class extends React.Component<T, IPriorityQueue> {
+const withPriorityQueue = <T extends IPriorityQueue>(
+  Component: React.ComponentType<T>
+) => {
+  return class extends React.Component<T, ICollection> {
     constructor(props: T) {
       super(props);
       this.state = {
-        collection: [] as any[]
+        collection: []
       };
       this.enqueue = this.enqueue.bind(this);
       this.dequeue = this.dequeue.bind(this);
@@ -21,6 +23,7 @@ function withPriorityQueue<T>(Component: React.ComponentType<T>) {
     // If not, place the collection in weight order.
     enqueue(element: [string, number]) {
       if (isEmpty(this.state.collection)) {
+        console.log("THIS FIRED", this.state.collection);
         this.setState({
           collection: [...this.state.collection, element]
         });
@@ -63,6 +66,6 @@ function withPriorityQueue<T>(Component: React.ComponentType<T>) {
       );
     }
   };
-}
+};
 
 export default withPriorityQueue;
