@@ -1,7 +1,16 @@
 import React from "react";
+import { isEmpty, get } from "lodash";
 
 // INTERFACES
-import { IGraphProps, IGraphState, IData, INode } from "./graph.interfaces";
+import {
+  IAdjacencyList,
+  IGraphProps,
+  IGraphState,
+  IData,
+  INode,
+  IObjectOfNumbers,
+  IObjectOfStrings
+} from "./graph.interfaces";
 
 // HELPERS
 import withPriorityQueue from "./graph.queue";
@@ -12,11 +21,15 @@ import { reducer } from "./graph.reducer";
 const Graph = (props: any) => {
   const [state, dispatch] = React.useReducer(reducer, {
     nodes: [],
-    adjacencyList: {}
+    adjacencyList: {} as IAdjacencyList
   });
 
+  // Destructure values out of state and props
+  const { data, enqueue, dequeue, collection } = props;
+  const { nodes, adjacencyList } = state;
+
+  // Perform initial data parsing when component mounts.
   React.useEffect(() => {
-    const { data } = props;
     for (let key in data) {
       dispatch({ type: "ADD_NODE", node: { name: key, adjacencyList: [] } });
       let edges = data[key];
@@ -30,8 +43,35 @@ const Graph = (props: any) => {
       }
     }
   }, []);
-  console.log(state);
-  return <p>Woo</p>;
+
+  // Use Djikstra's Algorithm to find the path
+  const djikstra = (start: string, end: string) => {
+    const times: IObjectOfNumbers = {};
+    const backtrace: IObjectOfStrings = {};
+
+    // The time to get efrom the start to the start is 0.
+    times[start] = 0;
+
+    // Add start to the Priority Queue.
+    enqueue([start, 0]);
+
+    // For every other node, initialize to Infinity.
+    nodes.forEach(node => {
+      if (node !== start) {
+        times[node] = Infinity;
+      }
+    });
+
+    // Keep looping while there are elements in the queue.
+    while (!isEmpty(collection)) {
+      let shortestStep: [string, number] = dequeue();
+      let currentNode: string = get(shortestStep, "[0]");
+      return { shortestStep, currentNode };
+    }
+    return "It never enters the loop, lol.";
+  };
+
+  return <React.Fragment>Aaaargh</React.Fragment>;
 };
 
 export default withPriorityQueue(Graph);

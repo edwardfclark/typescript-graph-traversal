@@ -22,13 +22,13 @@ export interface IGraphState {
   adjacencyList: IAdjacencyList;
 }
 
+export interface IObjectOfNumbers {
+  [key: string]: number;
+}
+
 export interface IAdjacencyListItem {
   nodeName: string;
   weight: number;
-}
-
-export interface IObjectOfNumbers {
-  [key: string]: number;
 }
 
 export interface IAdjacencyList {
@@ -41,4 +41,8 @@ export interface IData {
 export interface INode {
   name: string;
   adjacencyList: string[];
+}
+
+export interface IObjectOfStrings {
+  [key: string]: string;
 }
