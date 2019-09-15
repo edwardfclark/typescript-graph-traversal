@@ -3,7 +3,7 @@ import { isEmpty, get } from "lodash";
 
 // INTERFACES
 import {
-  IAdjacencyList,
+  // IAdjacencyList,
   IGraphProps,
   IObjectOfNumbers,
   IObjectOfStrings,
@@ -82,10 +82,6 @@ const Graph = (props: IGraphProps) => {
     }
     return { path, time: times[end] };
   };
-
-  if (!isEmpty(adjacencyList)) {
-    console.log(djikstra("A", "C"));
-  }
 
   return (
     <React.Fragment>
