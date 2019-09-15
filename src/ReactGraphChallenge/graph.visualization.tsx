@@ -122,8 +122,8 @@ const Visualization = (props: IVisProps) => {
         </TextWrapper>
         <FGraph
           simulationOptions={{
-            height: 300,
-            width: 300
+            height: 250,
+            width: 250
           }}
         >
           {renderNodes().map(node => (

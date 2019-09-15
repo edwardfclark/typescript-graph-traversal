@@ -12,11 +12,12 @@ export const Text = styled.p`
   &.subTitle {
     font-style: italic;
     color: grey;
+    margin-top: 0;
   }
 `;
 
 export const Title = styled.h1`
-  margin-top: 0;
+  margin: 0 0 0.3rem;
 `;
 
 export const TextWrapper = styled.div`
@@ -26,7 +27,7 @@ export const TextWrapper = styled.div`
 export const VisWrapper = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 900px;
+  width: 800px;
 `;
 
 export const Wrapper = styled.div`
