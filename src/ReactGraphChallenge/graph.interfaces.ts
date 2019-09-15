@@ -35,3 +35,7 @@ export interface INode {
 export interface IObjectOfStrings {
   [key: string]: string;
 }
+
+export interface IVisProps {
+  data: IAdjacencyList;
+}

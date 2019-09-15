@@ -5,9 +5,6 @@ import { isEmpty, get } from "lodash";
 import {
   IAdjacencyList,
   IGraphProps,
-  IGraphState,
-  IData,
-  INode,
   IObjectOfNumbers,
   IObjectOfStrings
 } from "./graph.interfaces";
@@ -16,6 +13,9 @@ import {
 import { reducer } from "./graph.reducer";
 import { PriorityQueue } from "./graph.helpers";
 import { IAdjacencyListItem } from "../GraphChallenge/graph.interfaces";
+
+// COMPONENTS & STYLES
+import Visualization from "./graph.visualization";
 
 const Graph = (props: IGraphProps) => {
   const [state, dispatch] = React.useReducer(reducer, {
@@ -41,7 +41,7 @@ const Graph = (props: IGraphProps) => {
         });
       }
     }
-  }, []);
+  }, [data]);
 
   // Use Djikstra's Algorithm to find the path
   const djikstra = (start: string, end: string) => {
@@ -88,7 +88,8 @@ const Graph = (props: IGraphProps) => {
 
   return (
     <React.Fragment>
-      {!isEmpty(adjacencyList) && <pre>{djikstra("A", "C")}</pre>}
+      {!isEmpty(adjacencyList) && <Visualization data={adjacencyList} />}
+      {isEmpty(adjacencyList) && <p>No adjacency list is present.</p>}
     </React.Fragment>
   );
 };
