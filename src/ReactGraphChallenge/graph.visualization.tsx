@@ -8,7 +8,21 @@ import { FGraph, Node, Link } from "./graph.styles";
 import { IVisProps, IVisNode, IVisLink } from "./graph.interfaces";
 
 const Visualization = (props: IVisProps) => {
-  const { data } = props;
+  const { data, djikstra } = props;
+  const [start, setStart] = React.useState("");
+  const [end, setEnd] = React.useState("");
+
+  React.useEffect(() => {
+    if (start && end) {
+      console.log("BOTH START AND END ARE SELECTED");
+    }
+  }, [start, end]);
+
+  const handleClick = (node: IVisNode) => {
+    if (!start) {
+      setStart(node.id);
+    }
+  };
 
   // Return a list of nodes for use in the visualization.
   const renderNodes = () => {
@@ -41,6 +55,8 @@ const Visualization = (props: IVisProps) => {
       }
     }, []);
   };
+
+  console.log(start, end);
 
   return (
     <FGraph

@@ -89,7 +89,9 @@ const Graph = (props: IGraphProps) => {
 
   return (
     <React.Fragment>
-      {!isEmpty(adjacencyList) && <Visualization data={adjacencyList} />}
+      {!isEmpty(adjacencyList) && (
+        <Visualization djikstra={djikstra} data={adjacencyList} />
+      )}
       {isEmpty(adjacencyList) && <p>No adjacency list is present.</p>}
     </React.Fragment>
   );
