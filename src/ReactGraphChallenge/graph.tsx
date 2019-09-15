@@ -3,19 +3,20 @@ import { isEmpty, get } from "lodash";
 
 // INTERFACES
 import {
-  IAdjacencyList,
+  // IAdjacencyList,
   IGraphProps,
-  IGraphState,
-  IData,
-  INode,
   IObjectOfNumbers,
-  IObjectOfStrings
+  IObjectOfStrings,
+  IAdjacencyListItem,
+  IDjikstra
 } from "./graph.interfaces";
 
 // HELPERS
 import { reducer } from "./graph.reducer";
 import { PriorityQueue } from "./graph.helpers";
-import { IAdjacencyListItem } from "../GraphChallenge/graph.interfaces";
+
+// COMPONENTS & STYLES
+import Visualization from "./graph.visualization";
 
 const Graph = (props: IGraphProps) => {
   const [state, dispatch] = React.useReducer(reducer, {
@@ -41,10 +42,10 @@ const Graph = (props: IGraphProps) => {
         });
       }
     }
-  }, []);
+  }, [data]);
 
   // Use Djikstra's Algorithm to find the path
-  const djikstra = (start: string, end: string) => {
+  const djikstra = (start: string, end: string): IDjikstra => {
     const times: IObjectOfNumbers = {};
     const backtrace: IObjectOfStrings = {};
     let priorityQueue = new PriorityQueue();
@@ -79,14 +80,17 @@ const Graph = (props: IGraphProps) => {
       path = [backtrace[lastStep], ...path];
       lastStep = backtrace[lastStep];
     }
-    return `path: ${path}, time: ${times[end]}`;
+    return { path, time: times[end] };
   };
 
-  if (!isEmpty(adjacencyList)) {
-    console.log(djikstra("A", "C"));
-  }
-
-  return <React.Fragment>Aaaargh</React.Fragment>;
+  return (
+    <React.Fragment>
+      {!isEmpty(adjacencyList) && (
+        <Visualization djikstra={djikstra} data={adjacencyList} />
+      )}
+      {isEmpty(adjacencyList) && <p>No adjacency list is present.</p>}
+    </React.Fragment>
+  );
 };
 
 export default Graph;
