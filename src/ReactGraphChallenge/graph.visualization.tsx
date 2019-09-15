@@ -2,7 +2,16 @@ import React from "react";
 import { find } from "lodash";
 
 // COMPONENTS & STYLES
-import { Container, FGraph, Link, Node, Text, Title } from "./graph.styles";
+import {
+  Container,
+  FGraph,
+  Link,
+  Node,
+  Text,
+  TextWrapper,
+  Title,
+  VisWrapper
+} from "./graph.styles";
 
 // INTERFACES
 import { IVisProps, IVisNode, IVisLink, IDjikstra } from "./graph.interfaces";
@@ -54,6 +63,14 @@ const Visualization = (props: IVisProps) => {
     return false;
   };
 
+  const checkIfNodeActive = (node: IVisNode) => {
+    if (node.id === start || node.id === end) return true;
+    if (djikstraResult) {
+      return djikstraResult.path.indexOf(node.id) !== -1;
+    }
+    return false;
+  };
+
   // Return a list of nodes for use in the visualization.
   const renderNodes = () => {
     let nodesList: IVisNode[] = [];
@@ -89,39 +106,41 @@ const Visualization = (props: IVisProps) => {
   return (
     <Container>
       <Title>Find The Path With Djikstra</Title>
-      <FGraph
-        simulationOptions={{
-          height: 300,
-          width: 300
-        }}
-      >
-        {renderNodes().map(node => (
-          <Node
-            key={node.id}
-            node={node}
-            showLabel
-            onClick={() => handleClick(node)}
-            selected={node.id === start || node.id === end}
-            active={
-              djikstraResult && djikstraResult.path.indexOf(node.id) !== -1
-            }
-          />
-        ))}
-        {renderLinks().map((link, i) => (
-          <Link
-            key={i}
-            link={{ source: link.source, target: link.target }}
-            active={checkIfActive(link)}
-          />
-        ))}
-      </FGraph>
-      {start && <Text>{`Your selected start node is ${start}.`}</Text>}
-      {end && <Text>{`Your selected end node is ${end}.`}</Text>}
-      {djikstraResult && (
-        <Text>{`The optimal path is ${djikstraResult.path.join(
-          ", "
-        )} with a travel cost of ${djikstraResult.time}`}</Text>
-      )}
+      <VisWrapper>
+        <FGraph
+          simulationOptions={{
+            height: 300,
+            width: 300
+          }}
+        >
+          {renderNodes().map(node => (
+            <Node
+              key={node.id}
+              node={node}
+              showLabel
+              onClick={() => handleClick(node)}
+              className={checkIfNodeActive(node) ? "active" : ""}
+            />
+          ))}
+          {renderLinks().map((link, i) => (
+            <Link
+              key={i}
+              link={{ source: link.source, target: link.target }}
+              //   active={checkIfActive(link) ? "true" : "false"}
+              className={checkIfActive(link) ? "active" : ""}
+            />
+          ))}
+        </FGraph>
+        <TextWrapper>
+          {start && <Text>{`Your selected start node is ${start}.`}</Text>}
+          {end && <Text>{`Your selected end node is ${end}.`}</Text>}
+          {djikstraResult && (
+            <Text>{`The optimal path is ${djikstraResult.path.join(
+              ", "
+            )} with a travel cost of ${djikstraResult.time}.`}</Text>
+          )}
+        </TextWrapper>
+      </VisWrapper>
     </Container>
   );
 };

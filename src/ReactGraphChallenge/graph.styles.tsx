@@ -11,20 +11,37 @@ export const Container = styled.div`
 `;
 
 export const Text = styled.p`
-  font-size: 1.4rem;
+  font-size: 1.2rem;
 `;
 
 export const Title = styled.h1``;
 
+export const TextWrapper = styled.div`
+  padding: 0 1rem;
+`;
+
+export const VisWrapper = styled.div`
+  display: flex;
+  border: 1px solid blue;
+`;
+
 // VISUALIZATION
-export const FGraph = styled(ForceGraph)``;
+export const FGraph = styled(ForceGraph)`
+  border: 1px solid red;
+`;
 
 export const Node = styled(ForceGraphNode)`
-  fill: ${({ selected }) => (selected ? "blue" : "red")};
+  fill: grey;
+  &.active {
+    fill: blue;
+  }
   cursor: pointer;
 `;
 
 export const Link = styled(ForceGraphLink)`
-  stroke: ${({ active }) => (active ? "blue" : "grey")};
+  stroke: grey;
+  &.active {
+    stroke: blue;
+  }
   stroke-width: 2;
 `;
