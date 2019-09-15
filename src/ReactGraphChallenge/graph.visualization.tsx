@@ -3,7 +3,6 @@ import { find } from "lodash";
 
 // COMPONENTS & STYLES
 import {
-  Container,
   FGraph,
   Link,
   Node,
@@ -108,7 +107,7 @@ const Visualization = (props: IVisProps) => {
     <Wrapper>
       <VisWrapper>
         <TextWrapper>
-          <Title>Find The Path With Djikstra</Title>
+          <Title>Find The Path With Dijkstra</Title>
           <Text className="subTitle">
             Select nodes by clicking them to begin...
           </Text>
