@@ -1,5 +1,3 @@
-import { IObjectOfNumbers } from "../GraphChallenge/graph.interfaces";
-
 export interface IGraphProps {
   data?: IData;
 }

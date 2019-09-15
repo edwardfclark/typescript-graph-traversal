@@ -1,11 +1,20 @@
 import React from "react";
 
-// INTERFACES
-import { IAdjacencyList } from "./graph.interfaces";
+// COMPONENTS & STYLES
+import { FGraph, Node, Link } from "./graph.styles";
 
-const Visualization = (props: IAdjacencyList) => {
+// INTERFACES
+import { IVisProps } from "./graph.interfaces";
+
+const Visualization = (props: IVisProps) => {
   console.log(props);
-  return <p>This rendered.</p>;
+  return (
+    <FGraph simulationOptions={{ height: 300, width: 300 }}>
+      <Node node={{ id: "first-node" }} />
+      <Node node={{ id: "second-node" }} />
+      <Link link={{ source: "first-node", target: "second-node" }} />
+    </FGraph>
+  );
 };
 
 export default Visualization;

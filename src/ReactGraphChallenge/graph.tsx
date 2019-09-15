@@ -6,13 +6,13 @@ import {
   IAdjacencyList,
   IGraphProps,
   IObjectOfNumbers,
-  IObjectOfStrings
+  IObjectOfStrings,
+  IAdjacencyListItem
 } from "./graph.interfaces";
 
 // HELPERS
 import { reducer } from "./graph.reducer";
 import { PriorityQueue } from "./graph.helpers";
-import { IAdjacencyListItem } from "../GraphChallenge/graph.interfaces";
 
 // COMPONENTS & STYLES
 import Visualization from "./graph.visualization";
