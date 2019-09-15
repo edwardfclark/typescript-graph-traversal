@@ -10,7 +10,8 @@ import {
   Text,
   TextWrapper,
   Title,
-  VisWrapper
+  VisWrapper,
+  Wrapper
 } from "./graph.styles";
 
 // INTERFACES
@@ -53,7 +54,7 @@ const Visualization = (props: IVisProps) => {
     }
   };
 
-  const checkIfActive = (link: IVisLink): boolean => {
+  const checkIfLinkActive = (link: IVisLink): boolean => {
     if (!djikstraResult) return false;
     const { path } = djikstraResult;
 
@@ -104,9 +105,21 @@ const Visualization = (props: IVisProps) => {
   };
 
   return (
-    <Container>
-      <Title>Find The Path With Djikstra</Title>
+    <Wrapper>
       <VisWrapper>
+        <TextWrapper>
+          <Title>Find The Path With Djikstra</Title>
+          <Text className="subTitle">
+            Select nodes by clicking them to begin...
+          </Text>
+          {start && <Text>{`Your selected start node is ${start}.`}</Text>}
+          {end && <Text>{`Your selected end node is ${end}.`}</Text>}
+          {djikstraResult && (
+            <Text>{`The optimal path is ${djikstraResult.path.join(
+              ", "
+            )} with a travel cost of ${djikstraResult.time}.`}</Text>
+          )}
+        </TextWrapper>
         <FGraph
           simulationOptions={{
             height: 300,
@@ -126,22 +139,13 @@ const Visualization = (props: IVisProps) => {
             <Link
               key={i}
               link={{ source: link.source, target: link.target }}
-              //   active={checkIfActive(link) ? "true" : "false"}
-              className={checkIfActive(link) ? "active" : ""}
+              //   active={checkIfLinkActive(link) ? "true" : "false"}
+              className={checkIfLinkActive(link) ? "active" : ""}
             />
           ))}
         </FGraph>
-        <TextWrapper>
-          {start && <Text>{`Your selected start node is ${start}.`}</Text>}
-          {end && <Text>{`Your selected end node is ${end}.`}</Text>}
-          {djikstraResult && (
-            <Text>{`The optimal path is ${djikstraResult.path.join(
-              ", "
-            )} with a travel cost of ${djikstraResult.time}.`}</Text>
-          )}
-        </TextWrapper>
       </VisWrapper>
-    </Container>
+    </Wrapper>
   );
 };
 

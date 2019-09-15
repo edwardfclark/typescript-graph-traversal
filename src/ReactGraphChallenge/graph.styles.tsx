@@ -2,19 +2,22 @@ import styled from "styled-components";
 import { ForceGraph, ForceGraphNode, ForceGraphLink } from "react-vis-force";
 
 export const Container = styled.div`
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  width: 900px;
-  margin: 0 auto;
   position: relative;
+  border: 1px solid green;
+  display: inline-block;
 `;
 
 export const Text = styled.p`
   font-size: 1.2rem;
+  &.subTitle {
+    font-style: italic;
+    color: grey;
+  }
 `;
 
-export const Title = styled.h1``;
+export const Title = styled.h1`
+  margin-top: 0;
+`;
 
 export const TextWrapper = styled.div`
   padding: 0 1rem;
@@ -22,12 +25,23 @@ export const TextWrapper = styled.div`
 
 export const VisWrapper = styled.div`
   display: flex;
-  border: 1px solid blue;
+  justify-content: space-between;
+  width: 900px;
+`;
+
+export const Wrapper = styled.div`
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 `;
 
 // VISUALIZATION
 export const FGraph = styled(ForceGraph)`
-  border: 1px solid red;
+  border: 1px solid grey;
+  border-radius: 0.5rem;
 `;
 
 export const Node = styled(ForceGraphNode)`
