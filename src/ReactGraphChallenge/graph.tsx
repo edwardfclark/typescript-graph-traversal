@@ -7,7 +7,8 @@ import {
   IGraphProps,
   IObjectOfNumbers,
   IObjectOfStrings,
-  IAdjacencyListItem
+  IAdjacencyListItem,
+  IDjikstra
 } from "./graph.interfaces";
 
 // HELPERS
@@ -44,7 +45,7 @@ const Graph = (props: IGraphProps) => {
   }, [data]);
 
   // Use Djikstra's Algorithm to find the path
-  const djikstra = (start: string, end: string) => {
+  const djikstra = (start: string, end: string): IDjikstra => {
     const times: IObjectOfNumbers = {};
     const backtrace: IObjectOfStrings = {};
     let priorityQueue = new PriorityQueue();
@@ -79,7 +80,7 @@ const Graph = (props: IGraphProps) => {
       path = [backtrace[lastStep], ...path];
       lastStep = backtrace[lastStep];
     }
-    return `path: ${path}, time: ${times[end]}`;
+    return { path, time: times[end] };
   };
 
   if (!isEmpty(adjacencyList)) {

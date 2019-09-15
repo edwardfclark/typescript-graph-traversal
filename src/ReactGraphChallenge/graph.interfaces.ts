@@ -1,3 +1,4 @@
+// GRAPH
 export interface IGraphProps {
   data?: IData;
 }
@@ -34,6 +35,23 @@ export interface IObjectOfStrings {
   [key: string]: string;
 }
 
+export interface IDjikstra {
+  path: string[];
+  time: number;
+}
+
+// VISUALIZATION
 export interface IVisProps {
   data: IAdjacencyList;
+  djikstra: (start: string, end: string) => IDjikstra;
+}
+
+export interface IVisNode {
+  id: string;
+}
+
+export interface IVisLink {
+  source: string;
+  target: string;
+  weight: number;
 }
