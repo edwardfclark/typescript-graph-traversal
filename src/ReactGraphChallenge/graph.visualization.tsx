@@ -107,7 +107,7 @@ const Visualization = (props: IVisProps) => {
     <Wrapper>
       <VisWrapper>
         <TextWrapper>
-          <Title>Find The Path With Dijkstra</Title>
+          <Title className="title">>Find The Path With Dijkstra</Title>
           <Text className="subTitle">
             Select nodes by clicking them to begin...
           </Text>
@@ -138,7 +138,6 @@ const Visualization = (props: IVisProps) => {
             <Link
               key={i}
               link={{ source: link.source, target: link.target }}
-              //   active={checkIfLinkActive(link) ? "true" : "false"}
               className={checkIfLinkActive(link) ? "active" : ""}
             />
           ))}
