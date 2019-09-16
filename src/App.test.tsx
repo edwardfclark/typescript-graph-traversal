@@ -19,12 +19,12 @@ it("handles no data case", () => {
 
 it("contains a title with the right text", () => {
   const graph = mount(<Graph data={graphData} />);
-  const title = graph.find("h1");
+  const title = graph.find(".title > h1");
   expect(title.text()).toEqual("Find The Path With Dijkstra");
 });
 
 it("contails a subTitle with the right text", () => {
   const graph = mount(<Graph data={graphData} />);
-  const subTitle = graph.find("p");
+  const subTitle = graph.find(".subTitle > p");
   expect(subTitle.text()).toEqual("Select nodes by clicking them to begin...");
 });
