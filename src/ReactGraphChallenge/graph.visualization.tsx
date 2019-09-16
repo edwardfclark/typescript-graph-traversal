@@ -12,6 +12,7 @@ import {
   VisWrapper,
   Wrapper
 } from "./graph.styles";
+import ErrorBoundary from "./graph.errorBoundary";
 
 // INTERFACES
 import { IVisProps, IVisNode, IVisLink, IDjikstra } from "./graph.interfaces";
@@ -107,7 +108,7 @@ const Visualization = (props: IVisProps) => {
     <Wrapper>
       <VisWrapper>
         <TextWrapper>
-          <Title>Find The Path With Dijkstra</Title>
+          <Title className="title">Find The Path With Dijkstra</Title>
           <Text className="subTitle">
             Select nodes by clicking them to begin...
           </Text>
@@ -119,30 +120,31 @@ const Visualization = (props: IVisProps) => {
             )} with a travel cost of ${djikstraResult.time}.`}</Text>
           )}
         </TextWrapper>
-        <FGraph
-          simulationOptions={{
-            height: 250,
-            width: 250
-          }}
-        >
-          {renderNodes().map(node => (
-            <Node
-              key={node.id}
-              node={node}
-              showLabel
-              onClick={() => handleClick(node)}
-              className={checkIfNodeActive(node) ? "active" : ""}
-            />
-          ))}
-          {renderLinks().map((link, i) => (
-            <Link
-              key={i}
-              link={{ source: link.source, target: link.target }}
-              //   active={checkIfLinkActive(link) ? "true" : "false"}
-              className={checkIfLinkActive(link) ? "active" : ""}
-            />
-          ))}
-        </FGraph>
+        <ErrorBoundary>
+          <FGraph
+            simulationOptions={{
+              height: 250,
+              width: 250
+            }}
+          >
+            {renderNodes().map(node => (
+              <Node
+                key={node.id}
+                node={node}
+                showLabel
+                onClick={() => handleClick(node)}
+                className={checkIfNodeActive(node) ? "active" : ""}
+              />
+            ))}
+            {renderLinks().map((link, i) => (
+              <Link
+                key={i}
+                link={{ source: link.source, target: link.target }}
+                className={checkIfLinkActive(link) ? "active" : ""}
+              />
+            ))}
+          </FGraph>
+        </ErrorBoundary>
       </VisWrapper>
     </Wrapper>
   );

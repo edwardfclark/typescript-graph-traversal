@@ -1,9 +1,30 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
+import React from "react";
+import { mount, shallow } from "enzyme";
 
-it('renders without crashing', () => {
-  const div = document.createElement('div');
-  ReactDOM.render(<App />, div);
-  ReactDOM.unmountComponentAtNode(div);
+// COMPONENTS
+import App from "./App";
+import Graph from "./ReactGraphChallenge";
+
+// HELPERS
+import { graphData } from "./ReactGraphChallenge/graph.helpers";
+
+it("renders without crashing", () => {
+  shallow(<App />);
+});
+
+it("handles no data case", () => {
+  const graph = shallow(<Graph />);
+  expect(graph.find("p").text()).toEqual("No adjacency list is present.");
+});
+
+it("contains a title with the right text", () => {
+  const graph = mount(<Graph data={graphData} />);
+  const title = graph.find(".title > h1");
+  expect(title.text()).toEqual("Find The Path With Dijkstra");
+});
+
+it("contails a subTitle with the right text", () => {
+  const graph = mount(<Graph data={graphData} />);
+  const subTitle = graph.find(".subTitle > p");
+  expect(subTitle.text()).toEqual("Select nodes by clicking them to begin...");
 });
